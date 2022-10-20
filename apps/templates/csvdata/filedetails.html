@@ -1,0 +1,122 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<style type="text/css" >
+    th{
+        border: 1px solid black;
+    }
+    td{
+        padding: 0.35em;
+        border: 1px solid black;
+        word-break: break-all; 
+
+        font-size: 0.9em;
+        word-wrap: break-word;
+        max-width:50px;   
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    td:focus {
+        display: flex;
+
+        border: 2px solid black;
+        max-width:100%;   
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+</style>
+{% endblock stylesheets %}
+{% block content %}
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            {% csrf_token %}
+            <form id="drop-col-form" class="drop-col" method="post"  enctype="multipart/form-data">
+                {% for f in form %}
+                {{ f}}
+                {{ f.errors}}
+                {% endfor %}
+          
+            </form>
+            {% if object.has_savedata %}
+            <button type="button" class="btn btn-success undo" value="UnDo" data-toggle="tooltip" data-original-title="btn btn-success">Undo</button>
+            {% endif %}
+            <div class="col-xl-12 col-md-12 m-b-30">
+
+                {% if object.hasnull %}
+                <div class="btn-group mb-2 mr-2">
+                    <button type="button" class="btn btn-danger">Null values detected</button>
+                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span></button>
+                    <div class="dropdown-menu">
+                        <option class="dropdown-item dropAllNullRows" value="DropNaAll" val1="0">Drop All row contian Null Values</option>
+                        <option class="dropdown-item dropAllNullColumns" value="DropNaAll" val1="1">Drop All column contian Null Values</option>
+                        <option class="dropdown-item replaceAllNulls" value="FillNaAll">Replace All Null Values</option>
+                        {% comment %} <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#!">Separated link</a> {% endcomment %}
+                    </div>
+                </div>
+                {% endif %} 
+                <thead>
+                    <tr style="text-align: center;">
+                        <th></th>
+                        {% for col , type in object.file_checkout.coltype_dict.items %}
+                        <th>
+                            <div class="btn-group mb-2 mr-2">
+                            <button class="btn btn-primary dropdown-toggle col_button" col-type="{{type}}" value="{{col}}" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{col}}</button>
+                                <div class="dropdown-menu">
+                                    <option class="dropdown-item dropOneColumn" value="DropColumn" val1="{{col}}" >Drop Column</option>
+                                    <option class="dropdown-item dropNullRowsInColumn" value="DropNaInCol" val1="{{col}}">Drop row contian Null Values</option>
+                                    <option class="dropdown-item replaceColNulls" value="FillNaInCol" val1="{{col}}" >Replace Null Values</option>
+                                    <option class="dropdown-item rename_col" value="RenameColumn" val1="{{col}}" >Rename Column</option>
+                                    
+                                    {% if type == 'object' %}
+                                    <option class="dropdown-item splitCol" value="SplitCol" val1="{{col}}" >split column</option>
+                                    <option class="dropdown-item joinStrCol" value="JoinStrCol" val1="{{col}}">Join Column ..</option>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                {{ object.file_checkout.data_frame|safe|slice:"100000"}}
+                <div class="loading" style="display: none;">
+                    Loading...
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script type="text/javascript">
+    <script src="js/lib/jquery-1.10.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    
+    <script src="static/js/jquery-3.1.1.min.js"></script>
+    <script src="static/js/jquery.waypoints.min.js"></script>
+    <script src="static/js/infinite.min.js'"></script>
+    
+    <script src="{{ ASSETS_ROOT }}/js/pages/costum.js"></script>
+    $('.tbody-container').children().wrapAll('<div class="infinite-container"></div>');
+    var infinite = new Waypoint.Infinite({
+        element: $('.infinite-container')[0],
+        onBeforePageLoad: function () {
+          $('.loading').show();
+        },
+        onAfterPageLoad: function ($items) {
+          $('.loading').hide();
+        }
+      });
+</script>
+{% endblock javascripts %}
