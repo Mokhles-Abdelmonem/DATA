@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,400;0,700;1,500&display=swap');
+
+*{
+  font-family: 'Ubuntu', sans-serif;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.logo{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.8em;
+    font-family: 'Ubuntu', sans-serif;
+
+}
+
+.certificate {
+    padding: 100px 100px;
+
+}
+section {
+    padding: 100px 200px;
+
+}
+.social-icon a  {
+    color: white;
+    font-size: 1.7em;
+    padding-right: 30px;
+}
+.top-icon{
+    margin-top:120px;
+}
+.title {
+    display: flex;
+    justify-content: center;
+    color: rgb(70, 202, 255);
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.content {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.card {
+    background-color: white;
+    width: 21.25em;
+    box-shadow: 0 5px 25px rgba(1, 1, 1, 15%);
+    border-radius: 10px;
+    padding: 25px;
+    margin: 15px;
+    transition: 0.7s ease;
+}
+.experience-card{
+    margin: 10px;
+    padding: 10px;
+    width: 25.25em;
+    /* height: 30.25em; */
+}
+.card:hover {
+    transform: scale(1.1);
+}
+
+.icon {
+    color: rgb(70, 202, 255);
+    font-size: 8em;
+    text-align: center;
+}
+
+.info {
+    text-align: center;
+    padding-bottom: 10px;
+}
+.info h3 {
+    color: rgb(70, 202, 255);
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 5px;
+}
+
+.projects , .certificate{
+    background-color: black;
+}
+
+.projects .content {
+    margin-top: 30px;
+}
+
+.inblack-card {
+    background-color: white;
+    border: 1px solid white ;
+    min-height: 10em;
+    width: 23em;
+    overflow: hidden;
+    border-radius: 10px;
+    margin: 20px;
+    transition: 00.7s ease;
+}
+
+.certificate-card{
+    width: 20em;
+
+}
+
+.inblack-card:hover {
+    transform: scale(1.1);
+}
+
+.inblack-card:hover .project-image{
+    opacity: 0.9;
+}
+
+.project-image img{
+    width: 100%;
+}
+
+.project-info {
+    padding: 1em;
+}
+.progect-category{
+    font-size: 0.8em;
+    color: black;
+
+}
+
+.project-title{
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+.project-title span{
+    color:rgb(243, 14, 14);
+
+}
+.project-description{
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-top: 20px;
+    /* padding-top: 20px; */
+}
+.more-details{
+    text-decoration: none;
+    color: rgb(70, 202, 255);
+
+}
+.more-details:hover{
+    color: blue;
+}
+.contact .icon{
+    font-size: 4.5em;
+
+}
+.contact .info h3{
+    color: black;
+}
+.contact .info p{
+    font-weight: 500;
+}
+
+.footer {
+  background: url(../images/portfolio-background.png) no-repeat;
+    color: white;
+    padding: 2em;
+    display: flex;
+    justify-content: space-between;
+}
+.footer-title{
+    font-size: 1.3em;
+    font-weight: 600;
+
+}
+.footer-title span{
+    color: rgb(70, 202, 255);
+}
+.footer .social-icon a{
+    font-size: 1.3em;
+}
+
+@media (max-width:1023px){
+    header{
+        padding: 12px 20px;
+    }
+    .navigation{
+        padding-left: 10px;
+    }
+    .title{
+        font-size: 1.8em;
+    }
+    section{
+        padding: 80px 20px;
+
+    }
+    .main-content h2{
+        font-size: 1em;
+    }
+    .main-content h3{
+        font-size: 1.6em;
+    }
+    .content{
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width:614px){
+    body{
+        font-size: 12px;
+    }
+    .main-content h2{
+        font-size: 0.8em;
+    }
+    .main-content h3{
+        font-size: 1.4em;
+    }
+}
+
+@media (max-width:300px){
+    body{
+        font-size: 10px;
+    }
+
+}
+
+
+/* ______________________________________________ */
+
+
+.max-width{
+  max-width: 1300px;
+  padding: 0 80px;
+  margin: auto;
+}
+/* navbar styling */
+.navbar{
+  position: fixed;
+  width: 100%;
+  padding: 15px 0;
+  background:black;
+  font-family: 'Ubuntu', 'sans-serif';
+}
+
+.navbar .max-width{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .logo-2 a{
+  color: white;
+  font-size: 35px;
+  font-weight: 600;
+}
+
+.navbar .menu li{
+  list-style: none;
+  display: inline-block;
+}
+
+.navbar .menu li a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  transition: color 0.3s ease;
+}
+.navbar .menu li a:hover {
+  color:  rgb(70, 202, 255);
+}
+.navbar .logo-2 a span{
+  color:  rgb(70, 202, 255);
+}
+/* home sectin styling */
+.home{
+  display: flex;
+  background: url("../images/portfolio-background.png");
+  height: 100vh;
+  color: white;
+  min-height: 500px;
+  font-family: 'Ubuntu', 'sans-serif';
+  padding: 0px;
+}
+
+.home .max-width{
+  margin: auto 0 auto 40px;
+}
+
+.home .home-content .text-1{
+  font-size: 27px;
+}
+
+.home .home-content .text-2{
+  font-size: 60px;
+  font-weight: 600;
+  margin-left: -3px;
+}
+
+.home .home-content .text-3{
+  font-size: 40px;
+  margin: 5px 0;
+}
+
+.home .home-content .text-3 span{
+  color: rgb(70, 202, 255);
+  font-weight: 500;
+}
+
+
+
+
+
+
