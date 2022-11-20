@@ -1,0 +1,68 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style type="text/css" >
+    ul {
+        padding: 0;
+        list-style-type: none;
+        color: #04a9f5;
+    }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Change password</h5>
+                    </div>
+                    <div class="card-block table-border-style">
+                        <div class="form-group">
+                            <div class="col-md-6">
+        
+                                <form  method="post" class="reset-form"  >
+                                    {% csrf_token %}
+                                    
+                                    {% for f in form %}
+                                        {{ f.label }}
+                                        {{f}}
+                                        {{f.help_text}}
+            
+                                    {% endfor %}
+                                    <br>
+                                    <button type="submit">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script type="text/javascript">
+
+    $("input").addClass("form-control")
+    $("button").addClass("btn btn-primary mb-2")
+
+
+
+
+</script>
+
+{% endblock javascripts %}

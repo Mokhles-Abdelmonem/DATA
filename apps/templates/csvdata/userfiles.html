@@ -3,214 +3,118 @@
 {% block title %} UI Forms {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style type="text/css" >
+    .fa-trash{
+        color : gray
+    }
+    .fa-trash:hover{
+        color : red
+    }
+    .button-right{
+        float:right;
+        margin: 0px !important;
+    }
+    .card-header{
+
+    }
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
-
-            <div class="col-xl-12 col-md-12 m-b-30">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
-                            aria-controls="home" aria-selected="false">Base Files</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active show" id="profile-tab" data-toggle="tab"
-                            href="#profile" role="tab" aria-controls="profile" aria-selected="true">This
-                            Week</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
-                            role="tab" aria-controls="contact" aria-selected="false">All</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <table class="table table-hover">
-                            {% csrf_token %}
-                            <thead>
-                            <tr>
-                                <th class="text-left">File</th>
-                                <th>Size</th>
-                                <th>Shape</th>
-                                <th>missing values</th>
-                                <th >duplicate rows</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for file in base_files %}
-                            <tr>
-                                <td class="text-left">
-                                    <h6 class="m-0"><a href="{% url 'basefile-details' file.id %}" >{{ file.file_name }}</a></h6>
-                                    
-                                    {% comment %} <h6 class="m-0"><img class="rounded-circle m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-1.jpg"
-                                                            alt="activity-user">Ida Jorgensen</h6> {% endcomment %}
-                                </td>
-                                <td>
-                                    <h6 class="m-0">{% widthratio file.base_file.size 1024 1 %} kb</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0"><small>{{ file.file_checkout.count_row }} x {{ file.file_checkout.count_col }}</small></h6>
-                                </td>
-                                <td>
-                                    {% if file.file_checkout.count_null > 0 %}
-                                    <h6 class="m-0 text-c-red">{{ file.file_checkout.count_null }}</h6>
-                                    {% else %}
-                                    <h6 class="m-0 text-c-green">{{ file.file_checkout.count_null }}</h6>
-                                    {% endif %}
-                                </td>
-                                <td >
-                                    {% if file.file_checkout.duplicate_num > 0 %}
-                                    <h6 class="m-0 text-c-red">{{ file.file_checkout.duplicate_num }}</h6>
-                                    {% else %}
-                                    <h6 class="m-0 text-c-green">{{ file.file_checkout.duplicate_num }}</h6>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
-
+            <!-- [ Hover-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Files</h5>
+                        <button type="button" class="btn btn-danger delete button-right" id="delete-selected" value="delete" data-toggle="tooltip" data-original-title="btn btn-danger">delete Selected</button>
                     </div>
-                    <div class="tab-pane fade active show" id="profile" role="tabpanel"
-                            aria-labelledby="profile-tab">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Activity</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th class="text-right"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <h6 class="m-0"><img class="rounded-circle  m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-2.jpg"
-                                                            alt="activity-user">Albert Andersen</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">Jumps over the lazy</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">2:37 PM</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0 text-c-red">Missed</h6>
-                                </td>
-                                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i>
-                                </td>
-                            </tr>
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                {% csrf_token %}
+                                <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <input type="checkbox" class="data-checkbox data-selected" id="checkAll">
+                                    </th>
+                                    <th class="text-left">File</th>
+                                    <th>Size</th>
+                                    <th>Shape</th>
+                                    <th>missing values</th>
+                                    <th >duplicate rows</th>
+                                    <th class="text-right"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for file in base_files %}
+                                <tr>
+                                    <td class="text-left">
+                                        <input type="checkbox" class="checkbox data-selected" id="customCheckbox" value="{{file.id}}">
+                                    </td>
+                                    <td class="text-left">
+                                        {% if file.file_name %}
+                                            <h6 class="m-0"><a href="{% url 'basefile-details' file.id %}" >{{ file.file_name }}</a></h6>
+                                        {% else %}
+                                            <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                        {% endif %}
+                                        
+                                        {% comment %} <h6 class="m-0"><img class="rounded-circle m-r-10"
+                                                                style="width:40px;"
+                                                                src="{{ ASSETS_ROOT }}/images/user/avatar-1.jpg"
+                                                                alt="activity-user">Ida Jorgensen</h6> {% endcomment %}
+                                    </td>
+                                    <td>
+                                        {% if file.base_file %}
+                                            <h6 class="m-0">{% widthratio file.base_file.size 1024 1 %} kb</h6>
+                                        {% else %}
+                                            <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if file.rows_num %}
+                                        <h6 class="m-0"><small>{{ file.rows_num }} x {{ file.cols_num }}</small></h6>
+                                        {% else %}
+                                        <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if file.nulls_num > 0 %}
+                                        <h6 class="m-0 text-c-red">{{ file.nulls_num }}</h6>
+                                        {% elif file.nulls_num == 0 %} 
+                                        <h6 class="m-0 text-c-green">{{ file.nulls_num }}</h6>
+                                        {% else %}
+                                        <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                        {% endif %}
+                                    </td>
+                                    <td >
+                                        {% if file.duplicates_num > 0 %}
+                                        <h6 class="m-0 text-c-red">{{ file.duplicates_num }}</h6>
+                                        {% elif file.duplicates_num == 0 %} 
+                                        <h6 class="m-0 text-c-green">{{ file.duplicates_num }}</h6>
+                                        {% else %}
+                                        <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                        {% endif %}                                
+                                    </td>
+                                    <td class="text-right">
+                                        <form id="my_form" method="post" action="{% url 'delete-data' file.id %}">
+                                            {% csrf_token %}
+                                        </form>
+                                        <a href="#" onclick="document.getElementById('my_form').submit();"><i class="fas fa-trash text-c-gray f-18"></i></a>
+                                    </td>
 
+                                </tr>
+                                {% endfor %}
 
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel"
-                            aria-labelledby="contact-tab">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>User</th>
-                                <th>Activity</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th class="text-right"></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <h6 class="m-0"><img class="rounded-circle  m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-3.jpg"
-                                                            alt="activity-user">Silje Larsen</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">Dog the quick brown</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">10:23 AM</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0 text-c-purple">Delayed</h6>
-                                </td>
-                                <td class="text-right"><i class="fas fa-circle text-c-purple f-10"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h6 class="m-0"><img class="rounded-circle m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-1.jpg"
-                                                            alt="activity-user">Ida Jorgensen</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">The quick brown fox</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">3:28 PM</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0 text-c-green">Done</h6>
-                                </td>
-                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h6 class="m-0"><img class="rounded-circle  m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-2.jpg"
-                                                            alt="activity-user">Albert Andersen</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">Jumps over the lazy</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">2:37 PM</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0 text-c-red">Missed</h6>
-                                </td>
-                                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h6 class="m-0"><img class="rounded-circle  m-r-10"
-                                                            style="width:40px;"
-                                                            src="{{ ASSETS_ROOT }}/images/user/avatar-1.jpg"
-                                                            alt="activity-user">Ida Jorgensen</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">The quick brown fox</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0">4:28 PM</h6>
-                                </td>
-                                <td>
-                                    <h6 class="m-0 text-c-green">Done</h6>
-                                </td>
-                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            
         </div>
     </div>
     <!-- [ Main Content ] end -->
@@ -218,4 +122,97 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+
+<script type="text/javascript">
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+    
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $(document).ready(function(){
+        $('#checkAll').on('click',function(){
+            if(this.checked){
+                $('.checkbox').each(function(){
+                    this.checked = true;
+                });
+            }else{
+                 $('.checkbox').each(function(){
+                    this.checked = false;
+                });
+            }
+        });
+        
+        $('.checkbox').on('click',function(){
+            if($('.checkbox:checked').length == $('.checkbox').length){
+                $('#checkAll').prop('checked',true);
+            }else{
+                $('#checkAll').prop('checked',false);
+            }
+        });
+
+        
+        $('#delete-selected').on('click',function(){
+            var ids = [];
+            $('.checkbox:checked').each(function() {
+                ids.push(this.value);
+            });
+            $.ajax({
+                type:"POST",
+                data: {ids:ids},
+                url: '/cleandata/multi-delete/',
+                cache: false,
+                dataType: "html",
+                success: function(){
+                    window.location.reload();
+                },
+                error: function(){
+                    alert("false");
+                }
+            });
+        });
+        
+        $(function() {
+            $('#delete-selected').hide(); 
+            $('.data-selected').change(function(){
+                if(this.checked){
+                    $('#delete-selected').show(); 
+                } else {
+                    if($('.checkbox:checked').length == 0){
+                    $('#delete-selected').hide(); 
+                    };
+                } 
+            });
+        });
+        
+    });
+
+</script>
+
+{% endblock javascripts %}

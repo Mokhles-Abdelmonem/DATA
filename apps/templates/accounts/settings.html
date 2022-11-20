@@ -1,0 +1,88 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Profile {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Edit Info</h5>
+                                        </div>
+                                        <form  method="post" class="settings-form" >     
+                                        {% csrf_token %}
+                                            <div class="card-block">
+                                                <div class="row">
+                                                    <div class="col-sm-6 mb-4">
+                                                        <div class="form-group">
+                                                            <label for="add">User Name</label>
+                                                            {{ user_data_form.username }}
+                                                            {{ user_data_form.username.errors }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-4">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Email address</label>
+                                                            {{ user_data_form.email }}
+                                                            {{ user_data_form.email.errors }}
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-4">
+                                                        <div class="form-group">
+                                                            <label for="fn">First Name</label>
+                                                            {{ user_data_form.first_name }}
+                                                            {{ user_data_form.first_name.errors }}
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6 mb-4">
+                                                        <div class="form-group">
+                                                            <label for="ln">Last Name</label>
+                                                            {{ user_data_form.last_name }}
+                                                            {{ user_data_form.last_name.errors }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12 mb-4">
+                                                        <button type="submit" class="btn btn-square btn-primary">Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="col-sm-6 mb-4">
+                                            <a href="{% url 'ch_pass' %}" class="change_pass">
+                                                <button type="button" class="btn btn-square btn-danger">Change password</button>
+                                            </a>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -31,7 +31,26 @@
     <link rel="stylesheet" href="{{ ASSETS_ROOT }}/css/dark.css">
 
     <!-- Specific CSS goes HERE -->
-    {% block stylesheets %}{% endblock stylesheets %}
+    {% block stylesheets %}
+    <style>
+    .errorlist {
+        display:table-row;
+
+    }
+    .errorlist li{
+        font-size: 14px;
+        font-weight: 700;
+        display: block;
+        padding: 10px 12px;
+        margin: 0 0 10px 0;
+        color: #e35f5f;
+        border: 1px solid #e35f5f;
+        border-radius: 4px;
+        background-position: 5px 12px;
+        overflow-wrap: break-word;
+    }
+    </style>
+    {% endblock stylesheets %}
 
 </head>
 <body>

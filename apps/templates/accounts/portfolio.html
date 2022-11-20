@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ ASSETS_ROOT }}/images/user/user-2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ ASSETS_ROOT }}/css/portfolio_style.css">
+    <title>{{mokhles_portfolio.name}}</title>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="max-width">
+            <div class="logo-2"><a href="#">Portfo<span>lio.</span></a></div>
+            <ul class="menu">
+                <li><a href="#home">Welcom</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#projects">Prejects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#certificate">Certificates</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="home" id="home">
+        <div class="max-width">
+            <div class="home-content">       
+                <div class="text-1">Hi , my name is</div>
+                <div class="text-2">{{mokhles_portfolio.name}}</div>
+                <div class="text-3">And I'm a <span>{{mokhles_portfolio.posision}}</span></div>
+            </div>
+            <div class="social-icon top-icon">
+                <a href="https://github.com/Mokhles-Abdelmonem" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/mokhles-hussain-52ba91183/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://www.hackerrank.com/mokhlesabdelmon1" target="_blank"><i class="fa-brands fa-hackerrank"></i></a>
+                <a href="https://www.facebook.com/mokhles.abdelmonem" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                <a href="https://twitter.com/mokhlesabdelmo2" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="cards" id="services">
+        <h2 class="title">services</h2>
+        <div class="content">
+            <div class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div class="info">
+                    <h3>{{services1.title}}</h3>
+                    <p>
+                        {{services1.description}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div class="info">
+                    <h3>{{services2.title}}</h3>
+                    <p>
+                        {{services2.description}}
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <section class="projects" id="projects">
+        <h2 class="title">delivered projects</h2>
+        <div class="content">
+            {% for progect in projects %}
+            <div class="inblack-card">
+                <div class="project-info">                    
+                    <strong class="project-title">
+                        <span>{{progect.title}}</span>
+                        {% if progect.link != "#" %}
+                        <a href="{{progect.link}}" class="more-details" target="_blank">Visit Site</a>
+                        {% endif %}
+                    </strong>
+                    <div class="project-description" >
+                        <span>{{ progect.description|safe }}</span>
+                    </div>
+                
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
+    <section class="experience" id="experience">
+        <h2 class="title">Experience</h2>
+        <div class="content">
+            {% for exp in experiences %}
+            <div class="card experience-card">
+                <div class="project-info">
+                    <strong class="project-title">
+                        <span>{{exp.title}}</span>
+                    </strong>
+                </div>
+                <div class="info">
+                    <p>
+                        {{exp.description}}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+    <section class="certificate" id="certificate">
+        <h2 class="title">Certificates</h2>
+        <div class="content">
+            {% for certificate in certificates %}
+            <div class="inblack-card certificate-card">
+                <div class="project-image">
+                    <img src="https://drive.google.com/uc?id={{certificate.imagelink}}" alt="certificate image">
+                </div>
+                <div class="project-info">
+                    <strong class="project-title">
+                        <span>{{certificate.title}}</span>
+                        <a href="{{certificate.filelink}}" class="more-details" target="_blank">Go</a>
+                    </strong>
+                </div>
+                <div class="info">
+                    <p>
+                        {{certificate.description}}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+
+    <section class="cards contact" id="contact">
+        <h2 class="title">Contact Me</h2>
+        <div class="content">
+            <div class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="info">
+                    <h3>Phone</h3>
+                    <p>
+                        +20 0{{mokhles_portfolio.phone}} <br>
+                        +20 0{{mokhles_portfolio.phone2}}
+                    </p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="icon">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="info">
+                    <h3>Email</h3>
+                    <p>
+                        {{mokhles_portfolio.email}}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p class="footer-title"> Whatsapp & telegram <span>+20 0{{mokhles_portfolio.phone}}</span></p>
+        <div class="social-icon">
+            <a href="https://github.com/Mokhles-Abdelmonem" target="_blank"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/mokhles-hussain-52ba91183/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.hackerrank.com/mokhlesabdelmon1" target="_blank"><i class="fa-brands fa-hackerrank"></i></a>
+            <a href="https://www.facebook.com/mokhles.abdelmonem" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://twitter.com/mokhlesabdelmo2" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+    </footer>
+    
+</body>
+</html>

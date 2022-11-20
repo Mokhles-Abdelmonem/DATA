@@ -1,0 +1,71 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Profile {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<style>
+    input[type=file]::file-selector-button {
+        display: none;
+        }
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Report Issuse</h5>
+                                        </div>
+                                        <form  method="post" class="settings-form" enctype="multipart/form-data">     
+                                        {% csrf_token %}
+                                            <div class="card-block">
+                                                <div class="col-sm-12 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="add">Report Text</label>
+                                                        {{ issuse_form.report_text }}
+                                                        {{ issuse_form.report_text.errors }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 mb-4">
+                                                    <div class="form-group">
+                                                        <label for="id_report_image" class="input-group-text">upload image</label>
+                                                        {{ issuse_form.report_image }}
+                                                        {{ issuse_form.report_image.errors }}
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12 mb-4">
+                                                    <button type="submit" class="btn btn-square btn-primary">Send</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
