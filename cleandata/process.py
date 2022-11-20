@@ -1,5 +1,4 @@
 import json
-from msilib.schema import tables
 from collectdata.models import BaseData, SaveData
 import pandas as pd 
 from io import StringIO
