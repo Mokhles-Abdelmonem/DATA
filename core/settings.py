@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',
     'django_celery_beat',
-    'apps.home',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'users',
     'collectdata',
-    'cleandata'
-
+    'cleandata',
+    'discoverdata',
 ]
 
 from django.utils import timezone
@@ -71,8 +74,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'core.urls'
-LOGIN_REDIRECT_URL = "home"  # Route defined in home/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in home/urls.py
+LOGIN_REDIRECT_URL = "/"  # Route defined in home/urls.py
+LOGOUT_REDIRECT_URL = "/login/"  # Route defined in home/urls.py
 TEMPLATE_DIR = os.path.join(CORE_DIR, "apps/templates")  # ROOT dir for templates
 
 TEMPLATES = [

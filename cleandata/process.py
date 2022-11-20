@@ -1,3 +1,5 @@
+import json
+from msilib.schema import tables
 from collectdata.models import BaseData, SaveData
 import pandas as pd 
 from io import StringIO
@@ -73,6 +75,7 @@ class RenameColumn(DataProcess):
 
 class UnDo():
     def __init__(self,**kwargs):
+        print("work \n")
         id = kwargs["pk"]
         data_obj = BaseData.objects.get(id=id)
         all_saved_data = SaveData.objects.filter(data_model=data_obj).order_by("-date")
@@ -89,4 +92,46 @@ class JoinStrCol(DataProcess):
         columns = kwargs["valueslist"]
         for col in columns:
             df[column] += df[col]
+        return df
+
+class DropDuplicates(DataProcess):
+    def process(self,**kwargs):
+        df = kwargs["df"]
+        df = df.drop_duplicates()
+        return df
+
+class RerangeColumn(DataProcess):
+    def process(self,**kwargs):
+        df = kwargs["df"]
+        column = kwargs["value1"]
+        the_direction = kwargs["value2"]
+        temp_cols = df.columns.tolist()
+        index = df.columns.get_loc(column)
+        new_cols = self.get_new_cols(temp_cols, index, the_direction)
+        df=df[new_cols]
+        return df
+
+    def get_new_cols(self, list, index, the_direction):
+        if the_direction == "right":
+            if index+1 < len(list) :
+                list = list[0:index]  + [list[index+1], list[index]] + list[index+2:]
+            return list
+        if the_direction == "left":
+            if index > 0 :
+                list = list[0:index-1]  + [list[index],list[index-1]] + list[index+1:]
+            return list
+        if the_direction == "first":
+            return list[index:index+1] + list[0:index] + list[index+1:]
+        if the_direction == "last":
+            return list[0:index] + list[index+1:] + list[index:index+1]
+
+
+class SaveEditable(DataProcess):
+    def process(self,**kwargs):
+        df = kwargs["df"]
+        changes = kwargs["value3"]
+        changes = json.loads(changes)
+        for key, value in changes.items() :
+            x , y = key.split(',')
+            df.iat[int(x), int(y)] = value
         return df

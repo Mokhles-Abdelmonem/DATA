@@ -9,6 +9,8 @@ from django.http import HttpResponse, response, JsonResponse
 import subprocess
 import uuid 
 from django.shortcuts import render, redirect
+from .tasks import refine_task
+from users.auth.decorators import  HandelError , error_decorator
 
 class CsvFileView(LoginRequiredMixin, CreateView):
     form_class = CSVDataForm
@@ -22,7 +24,7 @@ class CsvFileView(LoginRequiredMixin, CreateView):
 
             context["docs"] = CSVDataForm()
         return context
-    
+
     def form_valid(self, form):
         if self.request.FILES:
             for f in self.request.FILES.getlist('base_file'):
@@ -31,10 +33,11 @@ class CsvFileView(LoginRequiredMixin, CreateView):
                     file_name = str(f),
                     base_file=f,
                 )
-                data_obj.file_refine
+                refine_task.apply_async(args=[data_obj.id])
         return redirect(self.get_success_url())
     
     def get_success_url(self):
         url = reverse("user-files")
         return url
     
+   

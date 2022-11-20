@@ -33,11 +33,13 @@ $.ajaxSetup({
     }
 });
 
+$('#process-form').hide();
 
 $("table").prepend(contentString);
 $('.dropOneColumn').confirm({
     title: 'Confirm',
     content: 'Delete column!',
+    theme: localStorage.getItem("theme"),
     buttons: {
         delete: {
             text: 'Delete',
@@ -68,6 +70,7 @@ $('.dropOneColumn').confirm({
 $('.dropNullRowsInColumn').confirm({
     title: 'Confirm',
     content: 'Delete Null row in this column!',
+    theme: localStorage.getItem("theme"),
     buttons: {
         delete: {
             text: 'Delete',
@@ -99,18 +102,18 @@ $('.dropNullRowsInColumn').confirm({
 $('.dropAllNullRows').confirm({
     title: 'Confirm',
     content: 'Delete all rows contain null values!',
+    theme: localStorage.getItem("theme"),
     buttons: {
         delete: {
             text: 'Delete',
             btnClass: 'btn-red',
             keys: ['enter', 'shift'],
             action: function(){
-                var process = this.$target.val();
                 var axis = this.$target.attr('val1');
 
                 $.ajax({
                     type:"POST",
-                    data: {process:process, value1:axis, value2:null},
+                    data: {process:"DropNaAll", value1:axis, value2:null},
                     url: window.location.pathname,
                     cache: false,
                     dataType: "html",
@@ -131,17 +134,17 @@ $('.dropAllNullRows').confirm({
 $('.dropAllNullColumns').confirm({
     title: 'Confirm',
     content: 'Delete all columns contain null values!',
+    theme: localStorage.getItem("theme"),
     buttons: {
         delete: {
             text: 'Delete',
             btnClass: 'btn-red',
             keys: ['enter', 'shift'],
             action: function(){
-                var process = this.$target.val();
                 var axis = this.$target.attr('val1');
                 $.ajax({
                     type:"POST",
-                    data: {process:process, value1:axis, value2:null},
+                    data: {process:"DropNaAll", value1:axis, value2:null},
                     url: window.location.pathname,
                     cache: false,
                     dataType: "html",
@@ -169,6 +172,7 @@ $('.replaceAllNulls').confirm({
     '<input type="text" placeholder="split with" class="name form-control" required />' +
     '</div>' +
     '</form>',
+    theme: localStorage.getItem("theme"),
     buttons: {
         formSubmit: {
             text: 'Submit',
@@ -179,10 +183,9 @@ $('.replaceAllNulls').confirm({
                     $.alert('provide a valid name');
                     return false;
                 }
-                var process = this.$target.val();
                 $.ajax({
                     type:"POST",
-                    data: {process:process, value1:name, value2:null},
+                    data: {process:"FillNaAll", value1:name, value2:null},
                     url: window.location.pathname,
                     cache: false,
                     dataType: "html",
@@ -222,6 +225,7 @@ $('.replaceColNulls').confirm({
     '<input type="text" placeholder="split with" class="name form-control" required />' +
     '</div>' +
     '</form>',
+    theme: localStorage.getItem("theme"),
     buttons: {
         formSubmit: {
             text: 'Submit',
@@ -276,6 +280,7 @@ $('.splitCol').confirm({
     '<input type="text" placeholder="Separator" class="separator form-control" required />' +
     '</div>' +
     '</form>',
+    theme: localStorage.getItem("theme"),
     buttons: {
         formSubmit: {
             text: 'Submit',
@@ -328,6 +333,7 @@ $('.rename_col').confirm({
     '<input type="text" placeholder="name" class="name form-control" required />' +
     '</div>' +
     '</form>',
+    theme: localStorage.getItem("theme"),
     buttons: {
         formSubmit: {
             text: 'Submit',
@@ -377,6 +383,7 @@ $('.rename_col').confirm({
 $('.undo').confirm({
     title: 'Confirm',
     content: 'Are you shore you want to undo changes!',
+    theme: localStorage.getItem("theme"),
     buttons: {
         delete: {
             text: 'UnDo',
@@ -384,10 +391,9 @@ $('.undo').confirm({
             keys: ['enter', 'shift'],
             action: function(){
                 var process = this.$target.val();
-                console.log('process', process);
                 $.ajax({
                     type:"POST",
-                    data: {process:process, value1:null, value2:null},
+                    data: {process:"UnDo", value1:null, value2:null},
                     url: window.location.pathname,
                     cache: false,
                     dataType: "html",
@@ -411,7 +417,6 @@ $('.undo').confirm({
 
 var CheckBoxHtml = function (){
     var column = $(this).val();
-    console.log({"columntestcvgfbhn":column});
     var columns = [];
     var types = [];
     let checkboxHtml = "";
@@ -438,10 +443,9 @@ var CheckBoxHtml = function (){
 $('.joinStrCol').confirm({
     columnClass: 'col-md-6',
     title: 'join columns!',
+    theme: localStorage.getItem("theme"),
     content: function () {
         var column = this.$target.attr('val1');
-        console.log({"columntestcvgfbhn":column});
-        var types = [];
         let checkboxHtml = "";
         $(".col_button").each(function(){
             var col = $(this).val();
@@ -474,7 +478,6 @@ $('.joinStrCol').confirm({
                     columns.push(this.value);
                 });       
                 var column = this.$target.attr('val1');
-                console.log({"columns": columns});
                 if(!columns){
                     $.alert('provide a valid value');
                     return false;
@@ -510,3 +513,157 @@ $('.joinStrCol').confirm({
         });
     }
 });
+        
+
+$('.rerange_column').on('click',function(){
+    var column = $(this).attr('val1');
+    var direction =  $(this).attr('val2');
+    var process =  $(this).val();
+    $.ajax({
+        type:"POST",
+        data: {process:process, value1:column, value2:direction},
+        url: window.location.pathname,
+        cache: false,
+        dataType: "html",
+        success: function(){
+            window.location.reload();
+        },    
+        error: function(){
+            alert("false");
+        }    
+    });    
+});               
+
+$('.save-editable').hide();
+var editableCells = function(){
+    changedCells = {}
+    $('td').on('input',function(){
+        $('.save-editable').show();
+        var x = $(this).parent().index();
+        var y = $(this).index();
+        var value = $(this).text();
+        var key = `${x},${y-1}`
+        changedCells[key] = value
+        console.log( changedCells );
+
+    }); 
+}
+editableCells();
+
+$('.save-editable').on('click',function(){
+    var process =  $(this).attr('value');
+    var data = JSON.stringify(changedCells)
+    console.log(process)
+    $.ajax({
+        type:"POST",
+        data: {process:process, value1:null, value2:null, value3:data},
+        url: window.location.pathname,
+        cache: false,
+        dataType: "html",
+        success: function(){
+            window.location.reload();
+        },    
+        error: function(){
+            alert("false");
+        }    
+    }); 
+});  
+
+
+$('.export').on('click',function(){
+    var type =  $(this).text();
+    var url = window.location.pathname
+    var arr = url.split('/');
+    var id = arr[arr.indexOf('basefile-details') + 1];
+    console.log(id);
+    $.ajax({
+        type:"GET",
+        data: {type:type},
+        url: `/cleandata/test/${id}`,
+        success: function(response){
+            console.log(response)
+            return response;
+        },    
+        error: function(){
+            alert("false");
+        }    
+    });    
+}); 
+
+var setDark = function (){
+    localStorage.setItem("theme", "dark");
+    $('body').addClass('dark');
+    $("#theme-indicator").addClass("icon-sun").removeClass("icon-moon");
+    $("#theme-switch").prop('checked',false);
+    $('th').addClass("th-dark").removeClass("th-light");
+};
+
+var setLight = function (){
+    localStorage.setItem("theme", "light");
+    $('body').removeClass('dark'); 
+    $("#theme-indicator").addClass("icon-moon").removeClass("icon-sun");
+    $("#theme-switch").prop('checked',true);
+    $('th').addClass("th-light").removeClass("th-dark");
+};
+
+$('.custom-control').remove();
+$('#theme-indicator').on('click', function(){
+    var currentTheme = localStorage.getItem("theme");
+    if (currentTheme === 'dark') {
+        setLight();
+    }else {
+        setDark();
+    };
+    location.reload();
+
+});
+
+
+
+$('.drop-duplicates').on('click',function(){
+    var process =  $(this).attr('value');
+    console.log(process)
+    $.ajax({
+        type:"POST",
+        data: {process:process, value1:null, value2:null},
+        url: window.location.pathname,
+        cache: false,
+        dataType: "html",
+        success: function(){
+            window.location.reload();
+        },    
+        error: function(){
+            alert("false");
+        }    
+    }); 
+});  
+
+
+
+var setTheme = function(){
+    var currentTheme = localStorage.getItem("theme");
+
+    if (currentTheme === 'dark') {
+        setDark();
+    }else{
+        setLight();
+    };
+};
+setTheme();
+
+
+
+
+var infinite = new Waypoint.Infinite({
+    element: $('tbody')[0],
+    items: 'tbody > tr',
+    onBeforePageLoad: function () {
+        $('.loading').show();
+    },
+    onAfterPageLoad: function ($items) {
+        $('.loading').hide();
+        editableCells();
+        
+    }
+    });
+

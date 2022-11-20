@@ -11,7 +11,8 @@ def validate_file_size(value):
 
 def validate_file_extention(value):
     file_extention = str(value).split('.')[-1]
-    if file_extention != 'csv' and file_extention != 'tsv':
+    allowed_extentions = ['csv', 'tsv', 'xlsx', 'xls','ods']
+    if not file_extention in allowed_extentions :
         raise ValidationError("file extention must be in the format ('csv' or 'tsv')")
     else:
         return value

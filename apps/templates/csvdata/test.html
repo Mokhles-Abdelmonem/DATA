@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <style>
+        tbody {
+            overflow-x: auto;
+            height: 100%;
+            width: 100%;
+            background-color: powderblue;
+          }
+    </style>
+</head>
+    <body>
+        {% csrf_token %}
+        <table border="1" class="dataframe table table-striped text-center">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        <div class="btn-group mb-2 mr-2">
+                            test
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+
+
+            <tbody>
+                {% for number in page_obj %}
+                
+                <tr >
+                    
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    
+ 
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    <th>{{number}}</th>
+                    
+                    
+                </tr>
+                
+                {% endfor %}
+                
+                
+                
+            </tbody>
+        </table>
+        <div class="loading" style="display: none;">
+            Loading...
+        </div>
+        <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}"></a>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
+
+        <script type="text/javascript">
+                    
+            console.log('tedsdfgdfghfgklf');
+        
+            var infinite = new Waypoint.Infinite({
+                element: $('tbody')[0],
+                items: 'tbody > tr',
+                onBeforePageLoad: function () {
+                    $('.loading').show();
+                },
+                onAfterPageLoad: function ($items) {
+                    $('.loading').hide();
+            
+                }
+                });
+            
+            console.log(infinite);
+        </script>
+
+
+    </body>
+</html>

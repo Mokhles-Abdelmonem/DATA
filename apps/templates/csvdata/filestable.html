@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style type="text/css" >
+
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            
+            <!-- [ Hover-table ] start -->
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Files</h5>
+                    </div>
+                    <div class="card-block table-border-style">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                {% csrf_token %}
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>File Name</th>
+                                        <th>Visualization</th>
+                                        <th>Statistics</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for file in base_files %}
+                                        <tr>
+                                            <th scope="row">{{ forloop.counter }}</th>
+                                            <td>
+                                                {% if file.file_name %}
+                                                    <h6 class="m-0"><a href="{% url 'basefile-details' file.id %}" >{{ file.file_name }}</a></h6>
+                                                {% else %}
+                                                    <h6 class="m-0 text-c-yellow">loading ..</h6>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a target="_blank" href="{% url 'streamlit-frame' file.id %}" >
+                                                    <button type="button" class="btn btn-outline-danger" title="" data-toggle="tooltip" data-original-title="btn btn-outline-danger">Start</button>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-outline-info" title="" data-toggle="tooltip" data-original-title="btn btn-outline-info">soon !</button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- [ Hover-table ] end -->
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+
+<script type="text/javascript">
+
+</script>
+
+{% endblock javascripts %}
