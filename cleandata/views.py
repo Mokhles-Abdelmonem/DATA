@@ -143,9 +143,16 @@ class BaseFileView(LoginRequiredMixin, View):
         return page_obj, columns
 
 
-class DeleteFileView(LoginRequiredMixin, DeleteView):
-    model = BaseData
-    success_url = reverse_lazy('user-files')
+@login_required(login_url='login')
+@error_decorator
+def deletefile(request,  id):
+    user = request.user
+    print("\n id \n ")
+    print(id)
+    data_obj = BaseData.objects.get(id=id)
+    if user == data_obj.user:
+        data_obj.delete()
+    return redirect(reverse('user-files'))
 
 @login_required(login_url='login')
 @error_decorator

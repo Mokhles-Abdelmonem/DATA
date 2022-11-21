@@ -100,10 +100,9 @@
                                         {% endif %}                                
                                     </td>
                                     <td class="text-right">
-                                        <form id="my_form" method="post" action="{% url 'delete-data' file.id %}">
-                                            {% csrf_token %}
-                                        </form>
-                                        <a href="#" onclick="document.getElementById('my_form').submit();"><i class="fas fa-trash text-c-gray f-18"></i></a>
+                                        <a  href="{% url 'delete-data' file.id %}">
+                                            <i class="fas fa-trash text-c-gray f-18"></i>
+                                        </a>
                                     </td>
 
                                 </tr>
