@@ -29,7 +29,7 @@ def zip_lists(a, b):
 
 
 class UserFilesView(LoginRequiredMixin, ListView):
-    template_name = 'csvdata/userFiles.html'
+    template_name = 'csvdata/userfiles.html'
     def get_context_data(self):
         context = super(UserFilesView, self).get_context_data()
         data =  BaseData.objects.filter(user=self.request.user)
