@@ -22,6 +22,12 @@
                 {% endfor %}
           
             </form>
+            {% if empty_df %}
+            <div>
+                {{empty_df}}
+            </div>
+            {% endif %}
+
             <div class="col-xl-12 col-md-12 m-b-30">
                 <table border="1" class="dataframe table table-striped text-center">
                         <thead>

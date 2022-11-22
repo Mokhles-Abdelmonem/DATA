@@ -95,7 +95,11 @@ class BaseFileView(LoginRequiredMixin, View):
             print("\n TheProcess")
             print(TheProcess)
             THeClass = ProcessDict[TheProcess]
-            THeClass(**kwargs)
+            result = THeClass(**kwargs)
+            if result.df_empty():
+                print("\n TheClass is empty \n Worked ")
+                ctxt["empty_df"] = "the last action cases empty data frame so its ignored"
+
         else:
             ctxt['form'] = process_form
         ctxt['obj_id'] = kwargs["pk"]

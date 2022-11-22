@@ -7,11 +7,11 @@ class HandelError:
     @staticmethod
     def error_decorator(function):
         def wrapper(self, request, *args, **kwargs):
-            try:
-                return function(self, request, *args, **kwargs)
-            except Exception as e:
-                print(e)
-                return render(request, 'home/page-500.html')
+            # try:
+            return function(self, request, *args, **kwargs)
+            # except Exception as e:
+            #     print(e)
+            #     return render(request, 'home/page-500.html')
 
         return wrapper
 

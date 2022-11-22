@@ -13,9 +13,22 @@ class DataProcess():
         df = pd.read_csv(data,sep=",",index_col=False)
         kwargs["df"] = df
         df_processed = self.process(**kwargs)
-        SaveData.objects.create(data_model=data_obj, saved_data=df_processed.to_csv(index=False))
+        if df_processed.empty:
+            self.result = True
+        else:
+            file_path = str(data_obj.base_file)
+            df_processed.to_csv(file_path,index=False)
+            data_obj.rows_num , data_obj.cols_num = df_processed.shape
+            data_obj.nulls_num = df_processed.isnull().values.sum().sum()
+            data_obj.duplicates_num = df_processed.duplicated().any().sum()
+            data_obj.save()
+            SaveData.objects.create(data_model=data_obj, saved_data=df_processed.to_csv(index=False))
+            self.result = "success"
+
     def process(self,**kwargs):
         pass
+    def df_empty(self,**kwargs):
+        return self.result
     
 class DropColumn(DataProcess):
     def process(self,**kwargs):
@@ -74,15 +87,28 @@ class RenameColumn(DataProcess):
 
 class UnDo():
     def __init__(self,**kwargs):
-        print("work \n")
         id = kwargs["pk"]
         data_obj = BaseData.objects.get(id=id)
         all_saved_data = SaveData.objects.filter(data_model=data_obj).order_by("-date")
+        self.result = False
         if len(all_saved_data) > 1 :
             saved_data = all_saved_data[0]
             saved_data.delete()
 
-
+            saved_data = SaveData.objects.filter(data_model=data_obj).order_by("-date")[0]
+            data = StringIO(saved_data.saved_data)
+            df = pd.read_csv(data,sep=",",index_col=False)
+            kwargs["df"] = df
+            file_path = str(data_obj.base_file)
+            df.to_csv(file_path,index=False)
+            data_obj.rows_num , data_obj.cols_num = df.shape
+            data_obj.nulls_num = df.isnull().values.sum().sum()
+            data_obj.duplicates_num = df.duplicated().any().sum()
+            data_obj.save()
+            self.result = False
+        
+    def df_empty(self,**kwargs):
+        return self.result
 
 class JoinStrCol(DataProcess):
     def process(self,**kwargs):
