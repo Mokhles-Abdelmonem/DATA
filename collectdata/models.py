@@ -31,6 +31,9 @@ class BaseData(models.Model):
     cols_num = models.IntegerField(blank=True, null=True)
     nulls_num = models.IntegerField(blank=True, null=True)
     duplicates_num = models.IntegerField(blank=True, null=True)
+    token = models.CharField(max_length=2000, blank=True, null=True)
+
+
     def __str__(self):
         return self.user.username
         
