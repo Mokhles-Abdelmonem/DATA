@@ -54,12 +54,12 @@ class StreamlitView(LoginRequiredMixin, View):
 
 
 
-class EndSession(LoginRequiredMixin, View):
-    @HandelError.error_decorator
-    def get(self, request, *args, **kwargs):
-        file_id = kwargs.pop("pk")
-        basedata= BaseData.objects.get(id=file_id)
-        return redirect("/discoverdata/files/")
+# class EndSession(LoginRequiredMixin, View):
+#     @HandelError.error_decorator
+#     def get(self, request, *args, **kwargs):
+#         file_id = kwargs.pop("pk")
+#         basedata= BaseData.objects.get(id=file_id)
+#         return redirect("/discoverdata/files/")
 
 
 
@@ -120,8 +120,6 @@ class FileApi(APIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         token = serializer.data["token"]
-        print("\n token  \n ")
-        print(token)
         decode_token = jwt.decode(token, key='file_Key', algorithms=['HS256'])
         basedata = BaseData.objects.get(id=decode_token['id'])
         saved_data = SaveData.objects.filter(data_model=basedata).order_by("-date")[0]
