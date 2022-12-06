@@ -27,3 +27,9 @@ def error_decorator(function):
             print(e)
             return render(request, 'home/page-500.html')
     return wrapper
+
+def check_authorization(request , user):
+    """
+    """
+    if request.user != user:
+        return render(request, 'home/page-401.html')

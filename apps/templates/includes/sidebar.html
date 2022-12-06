@@ -16,9 +16,9 @@
                     <label>Navigation</label>
                 </li>
                 <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" 
-                    class="nav-item {% if 'dashboard' in segment %} active {% endif %}">
-                    <a href="/" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
-                            class="pcoded-mtext">Dashboard</span></a>
+                    class="nav-item {% if 'home' in segment %} active {% endif %}">
+                    <a href="{% url 'home' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span
+                            class="pcoded-mtext">Home</span></a>
                 </li>
                 {% comment %} <li data-username="Profile Page" 
                     class="nav-item {% if 'profile' in segment %} active {% endif %}">

@@ -12,7 +12,7 @@ from . import process
 from django.core.paginator import Paginator
 from django.template.defaulttags import register
 import csv
-from users.auth.decorators import  HandelError , error_decorator
+from users.auth.decorators import  HandelError , error_decorator , check_authorization
 
 @register.filter
 def get_item(dictionary, key):
@@ -65,6 +65,8 @@ class BaseFileView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         id = kwargs["pk"]
         saved_data = self.saved_data(id)
+        user = saved_data[0].data_model.user
+        check_authorization(request , user)
         df = self.get_or_update_df(saved_data)
         form = self.form_class()
         page_number = request.GET.get('page')
@@ -86,18 +88,14 @@ class BaseFileView(LoginRequiredMixin, View):
         ctxt = {}
         process_form = ProcessForm(request.POST)
         if process_form.is_valid():
-            # Here, save the response
             valueslist = request.POST.getlist("valueslist[]")
             if valueslist :
                 kwargs["valueslist"] = valueslist
             TheProcess = process_form.cleaned_data.pop("process")
             kwargs.update(process_form.cleaned_data)
-            print("\n TheProcess")
-            print(TheProcess)
             THeClass = ProcessDict[TheProcess]
-            result = THeClass(**kwargs)
+            result = THeClass(request,**kwargs)
             if result.df_empty():
-                print("\n TheClass is empty \n Worked ")
                 ctxt["empty_df"] = "the last action cases empty data frame so its ignored"
 
         else:
@@ -151,11 +149,9 @@ class BaseFileView(LoginRequiredMixin, View):
 @error_decorator
 def deletefile(request,  id):
     user = request.user
-    print("\n id \n ")
-    print(id)
     data_obj = BaseData.objects.get(id=id)
-    if user == data_obj.user:
-        data_obj.delete()
+    check_authorization(request , data_obj.user)
+    data_obj.delete()
     return redirect(reverse('user-files'))
 
 @login_required(login_url='login')
@@ -165,8 +161,8 @@ def deleteSelected(request):
     base_data_ids = request.POST.getlist('ids[]')
     for id in base_data_ids:
         data_obj = BaseData.objects.get(id=id)
-        if user == data_obj.user:
-            data_obj.delete()
+        check_authorization(request , data_obj.user)
+        data_obj.delete()
     return redirect(reverse('user-files'))
 
 
@@ -178,6 +174,7 @@ def export(request, *args, **kwargs) :
     id = kwargs["pk"]
     basedata= BaseData.objects.get(id=id)
     last_saved_data = SaveData.objects.filter(data_model=basedata).order_by("-date")[0]
+    check_authorization(request , last_saved_data.user)
     data = StringIO(last_saved_data.saved_data)
     df = pd.read_csv(data, sep=",")
     filename = basedata.file_name.split('.')[0]

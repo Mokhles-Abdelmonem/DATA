@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Forms {% endblock %} 
+{% block title %} File {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
@@ -14,14 +14,6 @@
     <!-- [ Main Content ] start -->
     <div class="pcoded-main-container">
         <div class="pcoded-wrapper">
-            {% csrf_token %}
-            <form id="process-form" class="costum-form" method="post"  enctype="multipart/form-data">
-                {% for f in form %}
-                {{ f}}
-                {{ f.errors}}
-                {% endfor %}
-          
-            </form>
             {% if empty_df %}
             <div>
                 {{empty_df}}

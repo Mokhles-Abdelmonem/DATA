@@ -126,11 +126,22 @@ class UserSettings(LoginRequiredMixin,TemplateView,CreateView):
 
 
 
-class Dashboard(LoginRequiredMixin,TemplateView):
+class Dashboard(TemplateView):
     template_name = 'accounts/dashboard.html'
     def get_context_data(self, **kwargs):
         context={}
         context['segment'] = "dashboard"
+        return context
+    def get(self, request, *args, **kwargs):
+        context=self.get_context_data()
+        return render(request, self.template_name, context=context)
+
+
+class Home(LoginRequiredMixin,TemplateView):
+    template_name = 'accounts/Home.html'
+    def get_context_data(self, **kwargs):
+        context={}
+        context['segment'] = "home"
         return context
     def get(self, request, *args, **kwargs):
         context=self.get_context_data()

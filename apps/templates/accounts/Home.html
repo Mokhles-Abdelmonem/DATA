@@ -1,0 +1,134 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Home {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+
+
+</style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!--[ home ] start-->
+                    <div class="row">
+
+                        <div class="col-xl-12 col-md-6">
+                            <div class="card">
+                                <div class="card-block px-0 py-3">
+                                    <div class="row align-items-center justify-content-center">
+                                        <h2 class="m-2 head-h" style="color: #1dc4e9 ;">Welcom to </h2>
+                                    </div>
+                                    <div class="row align-items-center justify-content-center">
+                                        <h2 class="m-2 head-h" style="color: #1de9e1 ;">Datta Analysis</h2>
+                                    </div>
+                                    <div class="row align-items-center justify-content-center">
+                                        <h3 class="m-2 head-h" style="color: #1de9b6 ;">Refine and visualize your data simple and easy way</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card daily-sales">
+                                <div class="card-block">
+                                    <h6 class="mb-4">Step 1</h6>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-9">
+                                            <a href="{% url 'get-data' %}" class="">
+                                                <h4 class="f-w-300 d-flex align-items-center m-b-0">
+                                                    <i class="feather icon-book f-30 m-r-10" style="color: #a389d4 ;"></i>
+                                                    gathering data
+                                                </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="progress m-t-30" style="height: 7px;">
+                                        <div class="progress-bar progress-c-theme2" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card Monthly-sales">
+                                <div class="card-block">
+                                    <h6 class="mb-4">Step 2</h6>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-9">
+                                            <a href="{% url 'user-files' %}" class="">
+                                                <h4 class="f-w-300 d-flex align-items-center  m-b-0">
+                                                    <i class="feather icon-refresh-cw f-30 m-r-10" style="color: #1dc4e9 ;" ></i>
+                                                    clean data
+                                                </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="progress m-t-30" style="height: 7px;">
+                                        <div class="progress-bar progress-c-theme3" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xl-4">
+                            <div class="card Monthly-sales">
+                                <div class="card-block">
+                                    <h6 class="mb-4">Step 3</h6>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="col-9">
+                                            <a href="{% url 'files-table' %}" class="">
+                                                <h4 class="f-w-300 d-flex align-items-center  m-b-0">
+                                                    <i class="feather icon-bar-chart-2 f-30 m-r-10" style="color: #1de9b6 ;" ></i>
+                                                    data visualization
+                                                </h4>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="progress m-t-30" style="height: 7px;">
+                                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: 100%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                                                
+                        <div class="col-xl-12 col-md-6">
+                            <div class="card">
+                                <div class="card-block px-0 py-3">
+                                    
+                                    <div class="row align-items-center justify-content-center">
+                                        <i class="feather icon-loader f-30 m-r-10" style="color: #1de9b6 ;" ></i>
+                                        <h3 class="m-2 head-h" style="color: #1de9e1 ;">And More Feature Coming Soon ..</h3>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!--[ home ] end-->
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->            
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+{% endblock javascripts %}

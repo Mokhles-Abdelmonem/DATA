@@ -2,12 +2,15 @@ import json
 from collectdata.models import BaseData, SaveData
 import pandas as pd 
 from io import StringIO
+from users.auth.decorators import check_authorization
 
 
 class DataProcess():
-    def __init__(self,**kwargs):
+    def __init__(self,request,**kwargs):
         id = kwargs["pk"]
         data_obj = BaseData.objects.get(id=id)
+        user = data_obj.user
+        check_authorization(request , user)
         saved_data = SaveData.objects.filter(data_model=data_obj).order_by("-date")[0]
         data = StringIO(saved_data.saved_data)
         df = pd.read_csv(data,sep=",",index_col=False)

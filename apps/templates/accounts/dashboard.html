@@ -1,134 +1,223 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Dashboard {% endblock %} 
-
-<!-- Specific CSS goes HERE -->
+{% block title %} dashboard {% endblock %}
 {% block stylesheets %}
 <style>
+.custom-nav-item{
+    float: left !important;
+}
+h5{
+    margin-top: 10px;
+}
+h5:hover{
+    color: #1dc4e9;
+}
 
+.welcom-dashboard{
+    position : relative;
+    z-index: 100000;
+}
+.welcom-text{
+}
+.auth-wrapper{
+    position : absolute;
+    top: 100px;
+    right : 0px;
+    justify-content: right !important;
+}
+.btn-auth{
+    border-radius: 25px;
+    font-size: 17px;
+}
+section {
+    padding: 100px 200px;
 
+}
+.img-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+*{
+    font-family: 'Ubuntu', sans-serif;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+footer{
+    box-shadow: 0 5px 25px rgba(1, 1, 1, 15%);
+    height : 100px;
+
+}
 </style>
 {% endblock stylesheets %}
-
-{% block content %}
-
-    <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                    <!--[ Dashboard ] start-->
-                    <div class="row">
-
-                        <div class="col-xl-12 col-md-6">
-                            <div class="card">
-                                <div class="card-block px-0 py-3">
-                                    <div class="row align-items-center justify-content-center">
-                                        <h2 class="m-2 head-h" style="color: #1dc4e9 ;">Welcom to </h2>
-                                    </div>
-                                    <div class="row align-items-center justify-content-center">
-                                        <h2 class="m-2 head-h" style="color: #1de9e1 ;">Datta Analysis</h2>
-                                    </div>
-                                    <div class="row align-items-center justify-content-center">
-                                        <h3 class="m-2 head-h" style="color: #1de9b6 ;">Refine and visualize your data simple and easy way</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card daily-sales">
-                                <div class="card-block">
-                                    <h6 class="mb-4">Step 1</h6>
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-9">
-                                            <a href="{% url 'get-data' %}" class="">
-                                                <h4 class="f-w-300 d-flex align-items-center m-b-0">
-                                                    <i class="feather icon-book f-30 m-r-10" style="color: #a389d4 ;"></i>
-                                                    gathering data
-                                                </h4>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="progress m-t-30" style="height: 7px;">
-                                        <div class="progress-bar progress-c-theme2" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card Monthly-sales">
-                                <div class="card-block">
-                                    <h6 class="mb-4">Step 2</h6>
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-9">
-                                            <a href="{% url 'user-files' %}" class="">
-                                                <h4 class="f-w-300 d-flex align-items-center  m-b-0">
-                                                    <i class="feather icon-refresh-cw f-30 m-r-10" style="color: #1dc4e9 ;" ></i>
-                                                    clean data
-                                                </h4>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="progress m-t-30" style="height: 7px;">
-                                        <div class="progress-bar progress-c-theme3" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card Monthly-sales">
-                                <div class="card-block">
-                                    <h6 class="mb-4">Step 3</h6>
-                                    <div class="row d-flex align-items-center">
-                                        <div class="col-9">
-                                            <a href="{% url 'files-table' %}" class="">
-                                                <h4 class="f-w-300 d-flex align-items-center  m-b-0">
-                                                    <i class="feather icon-bar-chart-2 f-30 m-r-10" style="color: #1de9b6 ;" ></i>
-                                                    data visualization
-                                                </h4>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="progress m-t-30" style="height: 7px;">
-                                        <div class="progress-bar progress-c-theme" role="progressbar" style="width: 100%;" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                                                
-                        <div class="col-xl-12 col-md-6">
-                            <div class="card">
-                                <div class="card-block px-0 py-3">
-                                    
-                                    <div class="row align-items-center justify-content-center">
-                                        <i class="feather icon-loader f-30 m-r-10" style="color: #1de9b6 ;" ></i>
-                                        <h3 class="m-2 head-h" style="color: #1de9e1 ;">And More Feature Coming Soon ..</h3>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                    </div>
-                    <!--[ Dashboard ] end-->
-                </div>
+{% block content %}   
+<!-- [ Header ] start -->
+<header class="navbar navbar-expand-lg navbar-light" style="padding:20px;">
+    
+    <div class="collapse navbar-collapse" style="margin: 0px 200px;">
+        <a href="{% if  user.is_authenticated %}/home/{% else %}/{% endif %}" class="b-brand ">
+            <div class="b-bg">
+                <i class="feather icon-trending-up"></i>
             </div>
+            <span class="b-title" style="color:#1dc4e9;"><h5>Datta Analysis</h5></span>
+        </a>
+        <ul class="navbar-nav ml-auto">
+            <a class="b-brand custom-nav-item" href="#welcom">
+                <span class="b-title"><h5>Welcom</h5></span>
+            </a>
+        </ul>
+        
+        <ul class="navbar-nav ml-auto">
+            <a class="b-brand custom-nav-item" href="#about">
+                <span class="b-title"><h5>About</h5></span>
+            </a>
+        </ul>
+        
+        <ul class="navbar-nav ml-auto">
+            <a class="b-brand custom-nav-item" href="#contact">
+                <span class="b-title"><h5>Contact</h5></span>
+            </a>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <a href="{% url 'login' %}">
+                <button type="submit" class="btn text-white theme-bg2 btn-auth"><strong>Login</strong></button>
+            </a>
+            <a href="{% url 'register' %}">
+                <button type="submit" class="btn text-white theme-bg btn-auth"><strong>Sign UP</strong></button>
+            </a>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li>
+                <label>
+                    <i class="icon feather icon-sun" id="theme-indicator"></i>
+                    <input type="checkbox" id="theme-switch" class="d-none">
+                </label>
+            </li>            
 
+        </ul>
+    </div>
+</header>
+<!-- [ Header ] end -->
+<section class="welcom" id="welcom">
+    <div class="welcom-dashboard">
+        <h3 class="high-index welcom-text">Hello!</h3>
+        <h1 class="high-index welcom-text">Welcom To</h1>
+        <h1 class="high-index welcom-text">Datta Analysis</h1>
+        <h3 class="high-index welcom-text">Analyse your data in a few steps,</h3>
+        <h3 class="high-index welcom-text">or hire a team</h3>
+        <br>
+        <a href="{% url 'login' %}">
+            <button type="submit" class="btn text-white theme-bg2 btn-auth"><strong>Login</strong></button>
+        </a>
+        <a href="{% url 'register' %}">
+            <button type="submit" class="btn text-white theme-bg btn-auth"><strong>Sign UP</strong></button>
+        </a>
+        <h3 class="high-index welcom-text">join us, share your Data skills</h3>
+        
+    </div>
+    <div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->            
+</section>
+
+<section class="user-guide" id="user-guide">
+    <!--[ Recent Users ] start-->
+    <h1 style="text-align:center; margin:30px;">How Its Work</h1>
+    <div class="col-xl-12 col-md-6">
+        <div class="card Recent-Users">
+            <div class="card-header">
+                <h5>Start by gathering data</h5>
+            </div>
+            <div class="card-block px-0 py-3 img-container">
+                <img src="{{ ASSETS_ROOT }}/images/gather.gif" alt="Girl in a jacket" width="900" height="400">
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-6">
+        <div class="card Recent-Users">
+            <div class="card-header">
+                <h5>after that clean your data if its messy </h5>
+            </div>
+            <div class="card-block px-0 py-3 img-container">
+                <img src="{{ ASSETS_ROOT }}/images/clean.gif" alt="Girl in a jacket" width="900" height="400">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-12 col-md-6">
+        <div class="card Recent-Users">
+            <div class="card-header">
+                <h5>and then Start explore your data by visualizing it </h5>
+            </div>
+            <div class="card-block px-0 py-3 img-container">
+                <img src="{{ ASSETS_ROOT }}/images/visualize.gif" alt="Girl in a jacket" width="900" height="400">
+
+            </div>
+        </div>
+    </div>
+    <!--[ Recent Users ] end-->
+</section>
+
+<section class="about" id="about">
+    <div class="container-about">
+        <h3 class="high-index welcom-text">About Datta Analysis</h3>
+        <h4 class="high-index welcom-text">is a powerful free, 
+            site for working with messy data: cleaning it, 
+        </h4>
+        <h4 class="high-index welcom-text">
+            transforming it from one format into another
+            and vizualize it with web streamlit app,
+        </h4>
+        <h4 class="high-index welcom-text">
+            Datta Analysis also is a comunity for data analyt
+            you can share your work , experience , ask questions and find solutions , or hire a team 
+        </h4>
+
+        <br>
+    </div>
+    <div class="auth-wrapper">
+        <div class="auth-content">
+            <div class="auth-bg">
+                <span class="r"></span>
+                <span class="r s"></span>
+                <span class="r s"></span>
+                <span class="r"></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<footer class="navbar navbar-expand-lg navbar-light" id="contact">
+    <div class="collapse navbar-collapse" style="margin: 0px 300px;">
+
+        <ul class="navbar-nav">
+            <a class="b-brand custom-nav-item" href="{% url 'portfolio' %}">
+                <span class="b-title"><h5>Copyright © 2022 Datta Analysis creator</h5></span>
+            </a>
+        </ul>
+        
+        <ul class="navbar-nav ml-auto">
+            <a class="b-brand custom-nav-item" >
+                <span class="b-title"><h5>dattanalysis@gmail.com</h5></span>
+            </a>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <a class="b-brand custom-nav-item" >
+                <span class="b-title"><h5>+2 01094016963</h5></span>
+            </a>
+        </ul>
+    </div>
+</footer>
 
 {% endblock content %}
-
-<!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-{% endblock javascripts %}
