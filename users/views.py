@@ -68,7 +68,7 @@ class LoginView(TemplateView, CreateView):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect("/")
+                return redirect("home")
             else:
                 msg = 'Invalid credentials'
         else:
