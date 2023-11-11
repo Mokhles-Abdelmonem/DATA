@@ -30,7 +30,7 @@ Data is a Django web application designed for data analysis, cleaning (refining)
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/data-deliver.git
+   git clone https://github.com/Mokhles-Abdelmonem/DATA.git
 
 2. Navigate to the project directory:
 
